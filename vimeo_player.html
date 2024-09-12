@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видеоплеер с Vimeo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        #video-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        #vimeo-player {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        #video-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+        .video-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .video-description {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        #video-list {
+            margin-top: 30px;
+        }
+        .video-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .video-item:hover {
+            background-color: #d8d8d8;
+        }
+        .video-thumbnail {
+            width: 120px;
+            height: 80px;
+            margin-right: 20px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        .video-item-content {
+            flex-grow: 1;
+        }
+        .video-item-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .video-item-description {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 0;
+        }
+        .section-title {
+            font-size: 28px;
+            margin: 40px 0 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div id="video-section">
+    <!-- Плеер -->
+    <iframe id="vimeo-player" src="https://player.vimeo.com/video/1008355730" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    
+    <!-- Информация о текущем видео -->
+    <div id="video-info">
+        <p class="video-title">Как растить свои и чужие бизнесы</p>
+        <p class="video-description">Как предпринимателям и руководителям, консультантам и коучам, инвесторам, действующим трекерам растить свой бизнес или помогать другим развивать их бизнесы</p>
+    </div>
+
+    <!-- Список видео -->
+    <h2 class="section-title">Список видео</h2>
+    <div id="video-list">
+        <!-- Видео элементы -->
+        <div class="video-item" onclick="loadVideo(0)">
+            <img src="https://vumbnail.com/1008355730.jpg" alt="thumbnail" class="video-thumbnail">
+            <div class="video-item-content">
+                <p class="video-item-title">Как растить свои и чужие бизнесы</p>
+                <p class="video-item-description">Как предпринимателям и руководителям, консультантам и коучам...</p>
+            </div>
+        </div>
+        <div class="video-item" onclick="loadVideo(1)">
+            <img src="https://vumbnail.com/1008353810.jpg" alt="thumbnail" class="video-thumbnail">
+            <div class="video-item-content">
+                <p class="video-item-title">Предприниматели</p>
+                <p class="video-item-description">Что нужно предпринимателю для счастья, и как трекинг помогает...</p>
+            </div>
+        </div>
+        <!-- Добавь остальные элементы с видео так же -->
+    </div>
+</div>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+    // Список видео
+    const videos = [
+        { videoId: '1008355730', title: 'Как растить свои и чужие бизнесы', description: 'Как предпринимателям и руководителям, консультантам и коучам, инвесторам, действующим трекерам растить свой бизнес или помогать другим развивать их бизнесы' },
+        { videoId: '1008353810', title: 'Предприниматели', description: 'Что нужно предпринимателю для счастья, и как трекинг помогает этого счастья достичь...' },
+        { videoId: '1008356200', title: 'Коучи', description: 'Помогает ли коучинг предпринимателям, и что нужно добавить, чтобы работать не только с головой предпринимателя...' },
+        { videoId: '1008356649', title: 'Консультанты', description: 'Как быть хорошим консультантом, давать клиенту много пользы и зарабатывать много денег...' },
+        { videoId: '1008357201', title: 'Руководители и специалисты', description: 'Что делать, если вы перестали расти, как выйти на более высокий уровень в управлении...' },
+        { videoId: '1008357536', title: 'Инвесторы', description: 'Как отбирать бизнесы, которые не будут сливать ваши деньги в трубу...' },
+        { videoId: '1008358089', title: 'Трекеры', description: 'Как поднять чек, увеличить лайфтайм клиента, слезть с иглы акселераторов...' },
+        { videoId: '1008358797', title: 'Три главных вопроса', description: 'Как растить бизнес. Чужими руками. И получать за это много денег...' },
+        { videoId: '1008359055', title: 'Ваша экспертиза ничего не стоит!', description: 'Что происходит, когда вы основываете свою ценность на экспертизе...' },
+        { videoId: '1008358940', title: 'Главное ограничение на пути к росту бизнеса', description: 'Что такое главное ограничение, как устроен цикл роста бизнеса...' },
+        { videoId: '1008358627', title: 'Кто такой трекер', description: 'Самые важные определения и концепции: как работает трекер...' },
+        { videoId: '1008358483', title: 'Одна сплошная польза', description: 'Как трекинг помогает бизнесам на разных стадиях роста...' }
+    ];
+
+    let currentVideoIndex = 0;
+    let player = new Vimeo.Player('vimeo-player', { id: videos[currentVideoIndex].videoId });
+
+    // Функция загрузки видео по индексу
+    function loadVideo(index) {
+        currentVideoIndex = index;
+        player.loadVideo(videos[currentVideoIndex].videoId).then(function() {
+            updateVideoInfo();
+        });
+    }
+
+    // Обновление информации о видео
+    function updateVideoInfo() {
+        document.querySelector('.video-title').textContent = videos[currentVideoIndex].title;
+        document.querySelector('.video-description').textContent = videos[currentVideoIndex].description;
+    }
+
+    // Автопереключение на следующее видео
+    player.on('ended', function() {
+        currentVideoIndex++;
+        if (currentVideoIndex >= videos.length) {
+            currentVideoIndex = 0; // Если текущее видео — последнее, начнем с первого
+        }
+        loadVideo(currentVideoIndex); // Загрузить следующее видео
+    });
+</script>
+
+</body>
+</html>
