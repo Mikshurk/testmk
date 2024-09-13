@@ -18,7 +18,7 @@
             background-color: #fff;
         }
         #vimeo-player {
-            width: 100%; /* Плеер занимает 100% ширины контейнера */
+            width: 100%;
             height: 500px;
             border: none;
         }
@@ -330,6 +330,9 @@
             // Если закончилось первое видео, скрываем плеер и показываем кнопки
             document.getElementById('vimeo-player').style.display = 'none';
             document.getElementById('post-video-content').style.display = 'block';
+        } else if (currentVideoIndex === 11) {
+            // Если закончилось последнее видео, перенаправляем на нужную ссылку
+            window.location.href = 'https://vk.cc/cAGAPf';
         } else {
             // Иначе переходим на следующее видео
             loadNextVideo();
