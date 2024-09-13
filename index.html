@@ -321,7 +321,7 @@
         document.querySelector('.video-description').textContent = videos[currentVideoIndex].description;
     }
 
-    // Определение сегментных видео и переход на следующее видео из блока "Как устроен трекинг"
+    // Автоматическая загрузка файла после последнего видео
     player.on('ended', function() {
         if (currentVideoIndex === 1 || currentVideoIndex === 2 || currentVideoIndex === 3 || currentVideoIndex === 4 || currentVideoIndex === 5 || currentVideoIndex === 6) {
             // Если закончилось одно из сегментных видео (например, Предприниматели, Коучи и т.д.)
@@ -331,8 +331,11 @@
             document.getElementById('vimeo-player').style.display = 'none';
             document.getElementById('post-video-content').style.display = 'block';
         } else if (currentVideoIndex === 11) {
-            // Если закончилось последнее видео, открываем указанную ссылку
-            window.open('https://docs.google.com/spreadsheets/d/1eaRQrbqokvZTVCn0fkuMPeAZPEzyBIcX/edit?usp=sharing&ouid=112452900066207805999&rtpof=true&sd=true', '_blank');
+            // Если закончилось последнее видео, инициируем скачивание файла
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'https://docs.google.com/uc?export=download&id=<ID_ФАЙЛА>';
+            downloadLink.download = 'Документ';
+            downloadLink.click(); // Программно кликаем по ссылке, чтобы скачать файл
         } else {
             // Иначе переходим на следующее видео
             loadNextVideo();
@@ -342,3 +345,4 @@
 
 </body>
 </html>
+
