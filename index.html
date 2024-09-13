@@ -18,7 +18,7 @@
             background-color: #fff;
         }
         #vimeo-player {
-            width: 100%;
+            width: 100%; /* Плеер занимает 100% ширины контейнера */
             height: 500px;
             border: none;
         }
@@ -331,8 +331,8 @@
             document.getElementById('vimeo-player').style.display = 'none';
             document.getElementById('post-video-content').style.display = 'block';
         } else if (currentVideoIndex === 11) {
-            // Если закончилось последнее видео, перенаправляем на нужную ссылку
-            window.location.href = 'https://docs.google.com/spreadsheets/d/1eaRQrbqokvZTVCn0fkuMPeAZPEzyBIcX/edit?usp=sharing&ouid=112452900066207805999&rtpof=true&sd=true';
+            // Если закончилось последнее видео, открываем указанную ссылку
+            window.open('https://docs.google.com/spreadsheets/d/1eaRQrbqokvZTVCn0fkuMPeAZPEzyBIcX/edit?usp=sharing&ouid=112452900066207805999&rtpof=true&sd=true', '_blank');
         } else {
             // Иначе переходим на следующее видео
             loadNextVideo();
