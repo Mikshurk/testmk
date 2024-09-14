@@ -17,6 +17,9 @@
             padding: 20px;
             background-color: #fff;
         }
+        #player-container {
+            position: relative;
+        }
         #vimeo-player {
             width: 100%; /* Плеер занимает 100% ширины контейнера */
             height: 500px;
@@ -81,6 +84,16 @@
             display: none;
             text-align: center;
             margin-top: 20px;
+        }
+        #framework-button {
+            display: none; /* Кнопка изначально скрыта */
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
         }
         #video-buttons button {
             padding: 10px 20px;
@@ -149,20 +162,8 @@
         <!-- Плеер -->
         <iframe id="vimeo-player" src="https://player.vimeo.com/video/1008355730" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
-        <!-- Блок с кнопками, который появится после завершения первого видео -->
-        <div id="post-video-content">
-            <p>На этом экране можно выбрать видео, которые вам интереснее всего посмотреть.</p>
-            <p>Вы узнаете, как методология трекинга может быть полезна предпринимателю, коучу, руководителю, консультанту, инвестору или трекеру.</p>
-            <div id="video-buttons">
-                <button onclick="loadVideo(1)">Предприниматели</button>
-                <button onclick="loadVideo(2)">Коучи</button>
-                <button onclick="loadVideo(3)">Консультанты</button>
-                <button onclick="loadVideo(4)">Руководители и специалисты</button>
-                <button onclick="loadVideo(5)">Инвесторы</button>
-                <button onclick="loadVideo(6)">Трекеры</button>
-                <button class="next-button" onclick="loadNextVideo()">Далее</button>
-            </div>
-        </div>
+        <!-- Кнопка для скачивания фреймворка, которая появится вместо плеера -->
+        <button id="framework-button" onclick="openFramework()">Скачать фреймворк</button>
     </div>
 
     <!-- Информация о текущем видео -->
@@ -264,6 +265,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
@@ -295,7 +297,7 @@
         player.loadVideo(videos[currentVideoIndex].videoId).then(function() {
             updateVideoInfo();
             document.getElementById('vimeo-player').style.display = 'block'; // Показываем плеер
-            document.getElementById('post-video-content').style.display = 'none'; // Скрываем кнопки
+            document.getElementById('framework-button').style.display = 'none'; // Скрываем кнопку фреймворка
             scrollToPlayer(); // Прокручиваем к плееру
         });
     }
@@ -321,23 +323,18 @@
         document.querySelector('.video-description').textContent = videos[currentVideoIndex].description;
     }
 
-    // Автоматическая загрузка файла после последнего видео
+    // Открытие фреймворка в новом окне
+    function openFramework() {
+        window.open('https://docs.google.com/spreadsheets/d/1eaRQrbqokvZTVCn0fkuMPeAZPEzyBIcX/edit?usp=sharing&ouid=112452900066207805999&rtpof=true&sd=true', '_blank');
+    }
+
+    // Показ кнопки для скачивания фреймворка после завершения последнего видео
     player.on('ended', function() {
-        if (currentVideoIndex === 1 || currentVideoIndex === 2 || currentVideoIndex === 3 || currentVideoIndex === 4 || currentVideoIndex === 5 || currentVideoIndex === 6) {
-            // Если закончилось одно из сегментных видео (например, Предприниматели, Коучи и т.д.)
-            loadVideo(7); // Переход на первое видео из блока "Как устроен трекинг"
-        } else if (currentVideoIndex === 0) {
-            // Если закончилось первое видео, скрываем плеер и показываем кнопки
+        if (currentVideoIndex === videos.length - 1) {
+            // Если закончилось последнее видео, скрываем плеер и показываем кнопку "Скачать фреймворк"
             document.getElementById('vimeo-player').style.display = 'none';
-            document.getElementById('post-video-content').style.display = 'block';
-        } else if (currentVideoIndex === 11) {
-            // Если закончилось последнее видео, инициируем скачивание файла
-            const downloadLink = document.createElement('a');
-            downloadLink.href = 'https://docs.google.com/uc?export=download&id=<ID_ФАЙЛА>';
-            downloadLink.download = 'Документ';
-            downloadLink.click(); // Программно кликаем по ссылке, чтобы скачать файл
+            document.getElementById('framework-button').style.display = 'block'; // Показываем кнопку вместо плеера
         } else {
-            // Иначе переходим на следующее видео
             loadNextVideo();
         }
     });
@@ -345,4 +342,3 @@
 
 </body>
 </html>
-
